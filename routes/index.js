@@ -112,12 +112,12 @@ passport.use(new LocalStrategy(
 
 
 
-function getAllUserDashboardDetails(req, res, id){
-    Order.getAllOrderdByUserId(id, function(err, orders){
+function getAllUserDashboardDetails(req, res, user){
+    Order.getAllOrderdByUserId(user._id, function(err, orders){
         console.log(orders);
-        Issue.getAllIssuesByUserId(id, function(err, issues){
+        Issue.getAllIssuesByUserId(user._id, function(err, issues){
             if(err)throw err;
-            Quote.getAllQuotesByUserId(id, function(err, quotes){
+            Quote.getAllQuotesByUserId(user._id, function(err, quotes){
                 if(err)throw err;
                 // res.render('index', {
                 //     user:req.user,
@@ -127,7 +127,7 @@ function getAllUserDashboardDetails(req, res, id){
                 // });
 
                 var result = {
-                    user:req.user,
+                    user:user,
                     orders:orders,
                     issues:issues,
                     quotes:quotes
@@ -181,7 +181,7 @@ router.post('/login', function(req, res, next){
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 // return res.redirect('/');
-                getAllUserDashboardDetails(req, res, user._id);
+                getAllUserDashboardDetails(req, res, user);
 			});
             
         })(req,res,next);
