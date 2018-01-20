@@ -3,7 +3,7 @@
  */
 
 var mongoose = require('mongoose');
-var connection = mongoose.connect('mongodb://localhost:27017/concrete');//connecting to our database named concrete
+var connection = mongoose.connect(process.env.DB); //('mongodb://localhost:27017/concrete');//connecting to our database named concrete
 var bcrypt = require('bcrypt');
 //creating the USER Schema
 var OrderSchema = mongoose.Schema({

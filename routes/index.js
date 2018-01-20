@@ -15,7 +15,7 @@ var User  = require('../models/User');
 var Order = require('../models/Orders');
 var Issue = require('../models/Issues');
 var Quote = require('../models/Quotations');
-var PO = require('../models/PurchaseOrder')
+var PO    = require('../models/PurchaseOrder')
 
 
 //These are all the get requests
@@ -28,12 +28,21 @@ router.get('/', isAuthenticated, function(req, res, next){
             if(err)throw err;
             Quote.getAllQuotesByUserId(req.user._id, function(err, quotes){
                 if(err)throw err;
-                res.render('index', {
+                // res.render('index', {
+                //     user:req.user,
+                //     orders:orders,
+                //     issues:issues,
+                //     quotes:quotes
+                // });
+
+                var result = {
                     user:req.user,
                     orders:orders,
                     issues:issues,
                     quotes:quotes
-                });
+                }
+                console.log('sending result object');
+                res.status(200).json(result);
             });
         });
     });
@@ -103,7 +112,32 @@ passport.use(new LocalStrategy(
 
 
 
+function getAllUserDashboardDetails(req, res, id){
+    Order.getAllOrderdByUserId(id, function(err, orders){
+        console.log(orders);
+        Issue.getAllIssuesByUserId(id, function(err, issues){
+            if(err)throw err;
+            Quote.getAllQuotesByUserId(id, function(err, quotes){
+                if(err)throw err;
+                // res.render('index', {
+                //     user:req.user,
+                //     orders:orders,
+                //     issues:issues,
+                //     quotes:quotes
+                // });
 
+                var result = {
+                    user:req.user,
+                    orders:orders,
+                    issues:issues,
+                    quotes:quotes
+                }
+                console.log('sending result object');
+                res.status(200).json(result);
+            });
+        });
+    });
+}
 
 
 //These are all the POST requests
@@ -116,12 +150,12 @@ router.post('/login', function(req, res, next){
     var username = req.body.username;
     var password = req.body.password;
     var captcha = req.body.captcha;
-
+    //console.log(req);
     //checking all the form-data is right
     req.checkBody('username', 'please enter a valid username').isEmail();
     req.checkBody('password', 'please enter a valid password').notEmpty();
-    req.checkBody('captcha', 'Captcha is incorrect').equals(req.session.captcha);
-
+    //req.checkBody('captcha', 'Captcha is incorrect').equals(req.session.captcha);
+    console.log('login hit');
     console.log(req.body);
     //getting all the validation errors
     var errors = req.validationErrors();
@@ -140,19 +174,18 @@ router.post('/login', function(req, res, next){
 
             //if username or password doesn't match
             if(!user){
-                return res.send({msg:info});
+                return res.json({ success: false, msg:info});
             }
 
             //this is when login is successful
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
-				return res.redirect('/');
+                // return res.redirect('/');
+                getAllUserDashboardDetails(req, res, user._id);
 			});
             
         })(req,res,next);
     }
-
-
 });
 
 
@@ -551,13 +584,17 @@ router.post('/addorder', function(req, res, next){
             statusDesc:statusDesc
         });
 
-        Order.createOrder(newOrder, function (err, Order) {
+        Order.createOrder(newOrder, function (err, order) {
             if(err){
                 res.send('some error occured');
                 throw err;
             }else{
-                console.log(Order);
-                res.send('Order created');
+                console.log(order);
+                res.status(200).json({
+                    success:true,
+                    msg:'order created',
+                    order:order
+                });
             }
         })
     }
