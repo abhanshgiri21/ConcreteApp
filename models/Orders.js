@@ -35,10 +35,6 @@ var OrderSchema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         required:true
     },
-    price:{
-        type:String,
-        required:true
-    },
     companyName:{
         type:String,
         required:true
@@ -54,7 +50,7 @@ var OrderSchema = mongoose.Schema({
 
 var Order = module.exports = mongoose.model('Order', OrderSchema);
 
-module.exports.getAllOrderdByUserId = function(id, callback){
+module.exports.getAllOrdersByUserId = function(id, callback){
     Order.find({requestedById:id}, {} , callback);
 }
 
@@ -79,8 +75,8 @@ module.exports.cancelOrder = function(orderId, reason, callback){
 }   
 
 
-module.exports.getOrdersForResponse = function(callback){
-    Order.find({status:'submitted'}, callback);
+module.exports.getOrdersForResponseBySupplierId = function(id, callback){
+    Order.find({ supplierId:id ,status:'submitted'}, callback);
 }
 
 

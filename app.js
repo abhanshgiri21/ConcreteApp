@@ -10,9 +10,12 @@ var nodemailer = require('nodemailer');
 var crypto = require('crypto');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var expressValidator = require('express-validator');
+
+
+
 var index = require('./routes/index');
 var users = require('./routes/users');
-var expressValidator = require('express-validator');
 
 var app = express();
 
@@ -37,8 +40,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/', index);
-app.use('/users', users);
+app.use('/api/', index);
+app.use('/api/users', users);
 
 app.use(expressValidator({
     errorFormatter: function(param, msg, value) {

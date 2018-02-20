@@ -3,13 +3,16 @@
  */
 
 var mongoose = require('mongoose');
-var connection = mongoose.connect(process.env.DB); //('mongodb://localhost:27017/concrete');//connecting to our database named concrete
+var connection = mongoose.connect('mongodb://localhost:27017/concrete');//('mongodb://localhost:27017/concrete');//connecting to our database named concrete
 var bcrypt = require('bcrypt');
 //creating the USER Schema
 var UserSchema = mongoose.Schema({
     name:{
         type:String,
         required:true
+    },
+    custType:{
+        type:String
     },
     email:{
         type:String,
@@ -62,6 +65,7 @@ var UserSchema = mongoose.Schema({
 var User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.findByUsername = function (username, callback) {
+    console.log(username);
     User.findOne({email:username}, callback);
 };
 

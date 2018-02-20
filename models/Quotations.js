@@ -46,7 +46,8 @@ var QuoteSchema = mongoose.Schema({
 var Quote = module.exports = mongoose.model('Quote', QuoteSchema);
 
 module.exports.getAllQuotesForSupplier = function(callback){
-    Quote.find({}, {}, callback);
+    console.log("about to find quotes");
+    Quote.find({}, callback);
 }
 module.exports.getAllQuotesByUserId = function(id, callback){
     Quote.find({requestedById:id}, {} , callback);
