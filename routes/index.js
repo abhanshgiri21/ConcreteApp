@@ -189,7 +189,7 @@ router.post('/addsite', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
     
         var name = req.body.name;
         var lat = req.body.lat;
@@ -245,7 +245,7 @@ router.post('/deletesite', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
     
         User.removeSite( userId, req.body.siteid, function(err, site){
             if(err){
@@ -273,7 +273,7 @@ router.get('/profile', function(req,res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
     
         User.findOneById( userId, function(err, user){
             if(err){
@@ -298,7 +298,7 @@ router.post('/profile', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
     
         var id = userId;
@@ -364,7 +364,7 @@ router.get('/history', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
 
         Order.getAllOrderdByUserId( userId, function(err, orders){
@@ -486,7 +486,7 @@ router.post('/requestquote', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
         var quality = req.body.quality;
         var quantity = req.body.quantity;
@@ -554,7 +554,7 @@ router.post('/createpo', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
         var generationDate = Date.now();
         var validTill = req.body.validTill;
@@ -600,7 +600,7 @@ router.post('/deletepo', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
         var id = req.body.id;
 
@@ -626,7 +626,7 @@ router.post('/addorder', function(req, res, next){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
         var date = Date.now();
         var requiredByDate = req.body.requiredDate;
@@ -716,7 +716,7 @@ router.post('/addissue', function(req, res){
             })
             return;
         }
-        var userId =  decoded.userId;
+        var userId =  decoded.id;
 
         //console.log(req.user);
         var title = req.body.title;

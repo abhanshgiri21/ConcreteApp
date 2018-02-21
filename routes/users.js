@@ -232,8 +232,9 @@ router.get('/profile', function(req,res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
-
+		var userId =  decoded.id;
+		console.log(userId);
+		console.log(decoded);
 
 		User.findOneById(userId, function(err, user){
 			if(err)throw err;
@@ -257,7 +258,7 @@ router.post('/profile', function(req, res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
+		var userId =  decoded.id;
 	
 		var id = userId;
 		var name = req.body.name;
@@ -325,7 +326,7 @@ router.get('/history', function(req, res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
+		var userId =  decoded.id;
 
 		Order.getAllOrderdBySupplierId(userId, function(err, orders){
 			res.json({
@@ -448,7 +449,7 @@ router.post('/respondtoquote', function(req, res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
+		var userId =  decoded.id;
 	
 		var rmxId = userId;
 		var price = req.body.price;
@@ -509,7 +510,7 @@ router.post('/pendingpo', function(req, res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
+		var userId =  decoded.id;
 		var id = userId;
 		PO.findPendingPOSupplier(id, function(err, pos){
 			res.json({
@@ -533,7 +534,7 @@ router.post('/confirmpendingpo', function(req, res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
+		var userId =  decoded.id;
 	
 		var id = req.body.POId;
 
@@ -563,7 +564,7 @@ router.get('/pendingorders', function(req, res){
 			})
 			return;
 		}
-		var userId =  decoded.userId;
+		var userId =  decoded.id;
 	
 		Order.getOrdersForResponseBySupplierId(userId, function(err, orders){
 			if(err){
