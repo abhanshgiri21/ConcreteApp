@@ -117,12 +117,14 @@ router.post('/login', function(req, res, next){
 		console.log(username, password);						
 		//checking the user credentials for loggin him in with session
 		User.findByUsername(username, function (err, user) {
+			console.log(user);
+			console.log(err);
 			if(err){
 				return res.json({
 					success:false,
 					msg:"there was some error",
 					errors:errors
-				})
+				});
 			}
 			if(!user){
 				console.log("user with username : " + username + " not found");
