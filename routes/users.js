@@ -29,6 +29,7 @@ router.get('/', isAuthenticated, function(req, res, next){
 	// 		quotes:quotes
 	// 	})
 	// })
+	var userId = res.locals.userId;
 	console.log("about to call the function");
 	Quote.getAllQuotesForSupplier(function(err, quotes){
 		console.log("quotes returnded");
@@ -502,7 +503,7 @@ router.post('/removequote', function(req, res){
 
 
 //this api will show PO requests in response to the quotes the supplier sent out , waiting to be confirmed
-router.post('/pendingpo', function(req, res){
+router.get('/pendingpo', function(req, res){
 	jwt.verify(req.headers.authorization, secret, function(err, decoded){
 		if(err){
 			//console.log("%%%%%%%%%%%%%%%%%%%" + err);

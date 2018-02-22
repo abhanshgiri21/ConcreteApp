@@ -613,7 +613,30 @@ router.post('/deletepo', function(req, res){
     });
 })
 
+router.get('/pos', function(req, res){
+    jwt.verify(req.headers.authorization, secret, function(err, decoded){
+        if(err){
+            //console.log("%%%%%%%%%%%%%%%%%%%" + err);
+            res.json({
+                msg:"some error occured"
+            })
+            return;
+        }
+        var userId =  decoded.id;
 
+        var id = req.body.id;
+
+        PO.findPoByContractor(id, function(err, pos){
+            if(err){
+                return handleError(err, null, res);
+            }
+            res.json({
+                success:true,
+                data:pos
+            })
+        });
+    });
+})
 
 //API to add an Order
 router.post('/addorder', function(req, res, next){

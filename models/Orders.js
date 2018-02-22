@@ -83,3 +83,7 @@ module.exports.getOrdersForResponseBySupplierId = function(id, callback){
 module.exports.updatePendingOrder = function(orderId, status, statusDesc, statusDate, callback){
     Order.findOneAndUpdate({_id:orderId}, {status:status, statusDesc:statusDesc, statusDate:statusDate}, callback);
 }
+
+module.exports.getAllOrderdByUserId = function(id, callback){
+    Order.find({requestedById:id}, callback);
+}

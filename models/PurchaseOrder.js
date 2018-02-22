@@ -71,3 +71,7 @@ module.exports.confirmPOBySupplier = function(id, callback){
 module.exports.findPendingPOSupplier = function(id, callback){
     PO.find({supplierId:id}, callback);
 }
+
+module.exports.findPoByContractor = function(id, callback){
+    PO.find({requestedById: id} , callback);
+}
