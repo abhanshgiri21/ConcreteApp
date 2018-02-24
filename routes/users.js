@@ -522,7 +522,8 @@ router.get('/pendingpo', function(req, res){
 			})
 		})
 	})
-})
+});
+
 
 
 //this api will confirm the PO accepted by supplier
@@ -554,7 +555,7 @@ router.post('/confirmpendingpo', function(req, res){
 			})
 		})
 	})
-})
+});
 
 //this api will show all the orders that are pending confirmation from seller
 router.get('/pendingorders', function(req, res){
@@ -896,8 +897,8 @@ router.post('/completeorder', function(req, res){
 // })
 
 function isAuthenticated(req, res, next){
-    if(req.headers['x-access-token']){
-        jwt.verify(req.headers['x-access-token'], secret, function(err, decoded){
+    if(req.headers['authorization']){
+        jwt.verify(req.headers['authorization'], secret, function(err, decoded){
             if(err){
                 console.log(err);
                 return handleError(err, null, res);

@@ -368,7 +368,9 @@ router.get('/history', function(req, res){
 
 
         Order.getAllOrderdByUserId( userId, function(err, orders){
-            res.json(orders);
+            res.json({
+                orders:orders 
+            });
         });
     });
 });
@@ -493,7 +495,7 @@ router.post('/requestquote', function(req, res){
         var customerSite = req.body.customerSite;
         var generationDate =  Date.now();
         var requiredDate = req.body.requiredDate;
-        var requestedBy = req.user.name;
+        var requestedBy = req.body.name;
         var requestedById = userId;
 
         req.checkBody('quantity', 'quantity cannot be empty').notEmpty();
@@ -624,9 +626,7 @@ router.get('/pos', function(req, res){
         }
         var userId =  decoded.id;
 
-        var id = req.body.id;
-
-        PO.findPoByContractor(id, function(err, pos){
+        PO.findPoByContractor(userId, function(err, pos){
             if(err){
                 return handleError(err, null, res);
             }
@@ -745,7 +745,7 @@ router.post('/addissue', function(req, res){
         var title = req.body.title;
         var description = req.body.description;
         var orderId = req.body.orderId;
-        var userId = req.userId;
+        var userId = userId;
         var type = req.body.type;
         var date = Date.now();
         var status = 'submitted to manager';
@@ -789,8 +789,8 @@ router.post('/addissue', function(req, res){
 
 //this function checks if the user is in session or not
 function isAuthenticated(req, res, next){
-    if(req.headers['x-access-token']){
-        jwt.verify(req.headers['x-access-token'], secret, function(err, decoded){
+    if(req.headers['authorization']){
+        jwt.verify(req.headers['authorization'], secret, function(err, decoded){
             if(err){
                 console.log(err);
                 return handleError(err, null, res);
