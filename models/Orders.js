@@ -76,7 +76,7 @@ module.exports.cancelOrder = function(orderId, reason, callback){
 
 
 module.exports.getOrdersForResponseBySupplierId = function(id, callback){
-    Order.find({ supplierId:id ,status:'submitted'}, callback);
+    Order.find({ supplierId:id}, callback);
 }
 
 

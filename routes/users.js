@@ -217,7 +217,10 @@ router.post('/signup', function(req, res, next){
 				throw err;
 			}else{
 				console.log(user);
-				res.send('user created');
+				res.json({
+					success: true,
+					msg: "user created"
+				})
 			}
 		})
 	}
@@ -629,7 +632,7 @@ router.post('/completeorder', function(req, res){
 			results:order
 		});
 	})
-})
+});
 
 
 
